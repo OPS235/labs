@@ -78,7 +78,7 @@ check "ssh $centos1UserName@centos1 grep -sq other /etc/passwd" "This program di
 
 # Check that PermitRootLogin in /etc/ssh/sshd_config file was set to no
 echo "Checking \"PermitRootLogin\" set to \"no\" (sshd_config backup): "
-check "ssh $centos1UserName@centos1 grep -qsi PermitRootLogin*.no /home/$centos1UserName/sshd_config.bk" "This program did not detect the option \"PermitRootLogin\" was set to \"no\" in the \"/home/$centos1UserName/sshd_config.bk\" file in your centos1 VM. Please make corrections, and re-run this checking shell script."
+check "ssh $centos1UserName@centos1 grep -qsi PermitRootLogin.*no /home/$centos1UserName/sshd_config.bk" "This program did not detect the option \"PermitRootLogin\" was set to \"no\" in the \"/home/$centos1UserName/sshd_config.bk\" file in your centos1 VM. Please make corrections, and re-run this checking shell script."
 
 # Check that account called other is AllowUsers in sshd_config file
 echo "Checking user \"other\" added to \"AllowUsers\" option (sshd_config backup): "
