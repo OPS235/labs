@@ -70,7 +70,7 @@ check  "test `df | grep /var/lib/libvirt/images$ | awk '{print $2;}'` -ge 100000
 
 # Checking for network connectivity
 echo -n "Checking for network connectivity: "
-check "wget -qO- http://google.ca &> /dev/null" "The size of the root partition must be 20GB. Please reinstall the c7host VM and re-run this shell script."
+check "wget -qO- http://google.ca &> /dev/null" "Your internet connection doesn't seem to work. Check /etc/sysconfig/network-scripts/ifcfg-ens33 to make sure ONBOOT is set to YES and being up the network interface using ifup."
 
 # Check if SELinux is disabled
 echo -n "Checking that SELinux is disabled: "
