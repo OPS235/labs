@@ -107,8 +107,8 @@ check "which xchat" "This program found that the \"xchat\" application was NOT i
 echo -n "Checking for \"epel\" repository added to repolist (c7host). Note: This may take a few moments (please be patient): "
 check "yum repolist | grep -isq \"epel\"" "This program did NOT detect that the \"epel\" repository was added to the repository list. Please re-do the task to add the \"epel\" repository to the repository list, issue the \"yum repolist\" command to verify it has been added, and then re-run this checking shell script."
 
-# Check for presence of lbreakout or lbreakout2  application (centos1)
-echo -n "Checking for presence of \"lbreakout\" application (centos1): "
+# Check for presence of lbreakout or lbreakout2  application (c7host)
+echo -n "Checking for presence of \"lbreakout\" application (c7host): "
 check "which lbreakout > /dev/null 2> /dev/null || which lbreakout2 > /dev/null 2> /dev/null" "This program did NOT detect that the game called \"lbreakout2\" was installed on your \"c7host\" VM. Please follow the instructions to properly compile your downloaded source code (perhaps ask your instructor or lab assistant for help), and then re-run this checking shell script."
 
 # Check for presence of packageInfo.bash bash shell script
