@@ -106,7 +106,7 @@ check "test -f /root/bin/createUsers.bash" "This program did NOT detect the file
 
 # Check that script createUsers.bash as run (c7host)
 echo  "Checking that the script \"/root/bin/createUsers.bash\" was run: "
-check "egrep -isq \"(msaul|dward|eweaver|sapted)\" /etc/passwd" "This program did NOT detect the new users (msaul, dward, eweaver, or sapted) in the \"/etc/passwd\" directory on your \"centos1\" VM. Make certain to run this shell script (and download the database file), and run this shell script, and re-run this checking script."
+check "egrep -isq \"(msaul|dward|eweaver|sapted)\" /etc/passwd" "This program did NOT detect the new users (msaul, dward, eweaver, or sapted) in the \"/etc/passwd\" directory on your \"c7host\" VM. Make certain to run this shell script (and download the database file), and run this shell script, and re-run this checking script."
 
 
 echo
