@@ -39,10 +39,18 @@ then
   exit 1
 fi
 
+# System information gathering
+echo
+echo "SYSTEM INFORMATION:"
+#echo "------------------------------------"
+hostnamectl
+echo -n "              Date: " 
+date
+
 # Start checking lab1
 echo
-echo "CHECKING YOUR LAB1 WORK:"
-echo
+echo "CHECKING YOUR LAB 1 WORK:"
+#echo
 
 # Check version of Linux distribution
 echo -n "Checking Correct Linux Distribution: "
@@ -89,15 +97,11 @@ echo -n "Checking that \"/root/bin/myreport.bash\" script was run:"
 check "test -f \"/root/report.txt\"" "This program did NOT detect the existence of the file \"/root/report.txt\" and may indicate that the shell script was NOT run. Please run the shell script correctly and re-run this shell script."
 
 
-
-
-
-
 echo
 echo
-echo "Congratulations:"
+echo "Congratulations!"
 echo
-echo "You have completed your lab1. Please check SIGN-OFF section"
-echo "To setup your terminals and command output, etc. to show your"
-echo "OPS235 instructor for SIGN-OFF."
+echo "You have successfully completed Lab 1."
+echo "1. Submit a screenshot of your entire desktop (including this window) to your course professor."
+echo "2. A copy of this script output has been created at ~/lab1_output.txt. Submit this file along with your screenshot."
 echo
