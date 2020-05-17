@@ -14,6 +14,8 @@
 # Function to indicate OK (in green) if check is true; otherwise, indicate
 # WARNING (in red) if check is false and end with false exit status
 
+logfile=/root/lab2_output.txt
+
 function check(){
 
   if eval $1
@@ -70,82 +72,83 @@ clear
 
 
 # Start checking lab2
-echo
-echo "CHECKING YOUR LAB2 WORK:"
-echo
+echo "OPS235 Lab 2 Check Script" > $logfile
+echo | tee -a $logfile
+echo "CHECKING YOUR LAB 2 WORK:" | tee -a $logfile
+echo | tee -a $logfile
 
 # Insert various checks here
 
 # Check if /root/bin directory exists in c7host VM
-echo -n "Checking for existence of \"/root/bin\" directory in c7host: "
-check "test -d /root/bin" "There is no bin directory contained in root's home directory in your c7host VM. You need to issue command: \"mkdir /root/bin\" and re-run this shell script."
+echo -n "Checking for existence of \"/root/bin\" directory in c7host: " | tee -a $logfile
+check "test -d /root/bin" "There is no bin directory contained in root's home directory in your c7host VM. You need to issue command: \"mkdir /root/bin\" and re-run this shell script." | tee -a $logfile
 
 # Check if /root/bin/lab2-check.bash path exists
-echo -n "Checking for pathname \"/root/bin/lab2-check.bash\""
-check "test -f /root/bin/lab2-check.bash" "The \"lab2-check.bash\" file should be contained in the \"/root/bin\" directory where all shell scripts should be for the Linux system administrator. Please location that file to the directory, and re-run this checking shell script."
+echo -n "Checking for pathname \"/root/bin/lab2-check.bash\"" | tee -a $logfile
+check "test -f /root/bin/lab2-check.bash" "The \"lab2-check.bash\" file should be contained in the \"/root/bin\" directory where all shell scripts should be for the Linux system administrator. Please location that file to the directory, and re-run this checking shell script." | tee -a $logfile
 
 # Check that all 3 VMs have been created
-echo -n "Checking that \"centos1\", \"centos2\", and \"centos3\" VMs have been created:"
-check "virsh list --all | grep -isq centos1 && virsh list --all | grep -isq centos2 && virsh list --all | grep -isq centos3" "This program detected that not ALL VMs have been created (i.e. centos1, centos2, centos3). Please create these VMs with the correct VM names, and re-run this checking shell script."
+echo -n "Checking that \"centos1\", \"centos2\", and \"centos3\" VMs have been created:" | tee -a $logfile
+check "virsh list --all | grep -isq centos1 && virsh list --all | grep -isq centos2 && virsh list --all | grep -isq centos3" "This program detected that not ALL VMs have been created (i.e. centos1, centos2, centos3). Please create these VMs with the correct VM names, and re-run this checking shell script." | tee -a $logfile
 
 
 # Check that all 3 VMs are running
-echo -n "Checking that \"centos1\", \"centos2\", and \"centos3\" VMs are ALL running:"
-check "virsh list | grep -isq centos1 && virsh list | grep -isq centos2 && virsh list | grep -isq centos3" "This program detected that not ALL VMs (i.e. centos1, centos2, centos3) are running. Please make certain that ALL VMs are running, and re-run this checking shell script."
+echo -n "Checking that \"centos1\", \"centos2\", and \"centos3\" VMs are ALL running:" | tee -a $logfile
+check "virsh list | grep -isq centos1 && virsh list | grep -isq centos2 && virsh list | grep -isq centos3" "This program detected that not ALL VMs (i.e. centos1, centos2, centos3) are running. Please make certain that ALL VMs are running, and re-run this checking shell script." | tee -a $logfile
 
 # Check centos1 VM has \"ext4\" file-system types
-echo "Checking that \"centos1\" has correct ext4 file-system type:"
-read -p "Enter the username that you created for your c7host and ALL VMs: " UserName
-read -p "Enter IP Address for your centos1 VMs eth0 device: " centos1_IPADDR
-check "ssh $UserName@$centos1_IPADDR \"lsblk -f | grep -i /$ | grep -iqs \"ext4\"\"" "This program detected that your centos1 VM does NOT have the correct filesystem type (ext4) for your / partition. Please remove and recreate the \"centos1\" VM, and re-run this checking shell script."
+echo "Checking that \"centos1\" has correct ext4 file-system type:" | tee -a $logfile
+read -p "Enter the username that you created for your c7host and ALL VMs: " UserName | tee -a $logfile
+read -p "Enter IP Address for your centos1 VMs eth0 device: " centos1_IPADDR | tee -a $logfile
+check "ssh $UserName@$centos1_IPADDR \"lsblk -f | grep -i /$ | grep -iqs \"ext4\"\"" "This program detected that your centos1 VM does NOT have the correct filesystem type (ext4) for your / partition. Please remove and recreate the \"centos1\" VM, and re-run this checking shell script." | tee -a $logfile
 
 # Check centos2 VM has \"ext4\" file-system types
-echo "Checking that \"centos2\" has correct ext4 file-system types:"
-read -p "Enter IP Address for your centos2 VMs eth0 device: " centos2_IPADDR
-check "ssh $UserName@$centos2_IPADDR \"lsblk -f | grep -iqs \"ext4\" && lsblk -f | grep -i /home$ | grep -iqs \"ext4\"\"" "This program detected that your centos2 VM does NOT have \"ext4\" file system types for / and/or /home partitions. Please remove and recreate the \"centos2\" VM, and re-run this checking shell script."
+echo "Checking that \"centos2\" has correct ext4 file-system types:" | tee -a $logfile
+read -p "Enter IP Address for your centos2 VMs eth0 device: " centos2_IPADDR | tee -a $logfile
+check "ssh $UserName@$centos2_IPADDR \"lsblk -f | grep -iqs \"ext4\" && lsblk -f | grep -i /home$ | grep -iqs \"ext4\"\"" "This program detected that your centos2 VM does NOT have \"ext4\" file system types for / and/or /home partitions. Please remove and recreate the \"centos2\" VM, and re-run this checking shell script." | tee -a $logfile
 
 
 # Check centos2 VM has correct partition sizes
-echo "Checking that \"centos2\" has correct partition sizes:"
-check "ssh $UserName@$centos2_IPADDR \"lsblk | grep -isq \"2G.*/home\" && lsblk | grep -isq \"8G.*/\"\"" "This program detected that your centos2 VM does NOT have correct partition sizes for  / and/or /home partitions. Please remove and recreate the \"centos2\" VM, and re-run this checking shell script."
+echo "Checking that \"centos2\" has correct partition sizes:" | tee -a $logfile
+check "ssh $UserName@$centos2_IPADDR \"lsblk | grep -isq \"2G.*/home\" && lsblk | grep -isq \"8G.*/\"\"" "This program detected that your centos2 VM does NOT have correct partition sizes for  / and/or /home partitions. Please remove and recreate the \"centos2\" VM, and re-run this checking shell script." | tee -a $logfile
 
 
 # centos3 does not have to be checked since it was automatically setup...
 
 
 # Check centos1 VM image file is in "images" directory
-echo "Checking that \"/var/lib/libvirt/images/centos1.qcow2\" file exists:"
-check "test -f /var/lib/libvirt/images/centos1.qcow2" "This program detected that the file pathname \"/var/lib/libvirt/images/centos1.qcow2\" does NOT exist. Please remove, and recreate the centos1 VM, and then re-run this checking shell script."
+echo "Checking that \"/var/lib/libvirt/images/centos1.qcow2\" file exists:" | tee -a $logfile
+check "test -f /var/lib/libvirt/images/centos1.qcow2" "This program detected that the file pathname \"/var/lib/libvirt/images/centos1.qcow2\" does NOT exist. Please remove, and recreate the centos1 VM, and then re-run this checking shell script." | tee -a $logfile
 
 # Check centos2 VM image file is in "images" directory
-echo -n "Checking that \"/var/lib/libvirt/images/centos2.qcow2\" file exists:"
-check "test -f /var/lib/libvirt/images/centos2.qcow2" "This program detected that the file pathname \"/var/lib/libvirt/images/centos2.qcow2\" does NOT exist. Please remove, and recreate the centos1 VM, and then re-run this checking shell script."
+echo -n "Checking that \"/var/lib/libvirt/images/centos2.qcow2\" file exists:" | tee -a $logfile
+check "test -f /var/lib/libvirt/images/centos2.qcow2" "This program detected that the file pathname \"/var/lib/libvirt/images/centos2.qcow2\" does NOT exist. Please remove, and recreate the centos1 VM, and then re-run this checking shell script." | tee -a $logfile
 
 # Check centos3 VM image file is in "images" directory
-echo -n "Checking that \"/var/lib/libvirt/images/centos3.qcow2\" file exists:"
-check "test -f /var/lib/libvirt/images/centos3.qcow2" "This program detected that the file pathname \"/var/lib/libvirt/images/centos3.qcow2\" does NOT exist. Please remove, and recreate the centos3 VM, and then re-run this checking shell script."
+echo -n "Checking that \"/var/lib/libvirt/images/centos3.qcow2\" file exists:" | tee -a $logfile
+check "test -f /var/lib/libvirt/images/centos3.qcow2" "This program detected that the file pathname \"/var/lib/libvirt/images/centos3.qcow2\" does NOT exist. Please remove, and recreate the centos3 VM, and then re-run this checking shell script." | tee -a $logfile
 
 # Check that  backupVM.bash script was created in /root/bin directory
-echo -n "Checking that file pathname \"/root/bin/backupVM.bash\" exists:"
-check "test -f /root/bin/backupVM.bash" "This program detected that the file pathname \"/root/bin/backupVM.bash\" does NOT exist. please make fixes to this script, and re-run this checking shell script."
+echo -n "Checking that file pathname \"/root/bin/backupVM.bash\" exists:" | tee -a $logfile
+check "test -f /root/bin/backupVM.bash" "This program detected that the file pathname \"/root/bin/backupVM.bash\" does NOT exist. please make fixes to this script, and re-run this checking shell script." | tee -a $logfile
 
 # Check centos1 VM backed up (qcow2)
-echo -n "Checking that centos1 backed up in user's home directory:"
-check "test -f /home/$UserName/centos1.qcow2.backup.gz" "This program detected that the file pathname \"/home/$c7hostUserName/centos1.qcow2.backup.gz\" does NOT exist. Please properly backup the centos1 VM (using gzip) to your home directory, and then re-run this checking shell script."
+echo -n "Checking that centos1 backed up in user's home directory:" | tee -a $logfile
+check "test -f /home/$UserName/centos1.qcow2.backup.gz" "This program detected that the file pathname \"/home/$c7hostUserName/centos1.qcow2.backup.gz\" does NOT exist. Please properly backup the centos1 VM (using gzip) to your home directory, and then re-run this checking shell script." | tee -a $logfile
 
 # Check centos2 VM backed up (qcow2)
-echo -n "Checking that centos2 backed up in user's home directory:"
-check "test -f /home/$UserName/centos2.qcow2.backup.gz" "This program detected that the file pathname \"/home/$c7hostUserName/centos2.qcow2.backup.gz\" does NOT exist. Please properly backup the centos2 VM (using gzip) to your home directory, and then re-run this checking shell script."
+echo -n "Checking that centos2 backed up in user's home directory:" | tee -a $logfile
+check "test -f /home/$UserName/centos2.qcow2.backup.gz" "This program detected that the file pathname \"/home/$c7hostUserName/centos2.qcow2.backup.gz\" does NOT exist. Please properly backup the centos2 VM (using gzip) to your home directory, and then re-run this checking shell script." | tee -a $logfile
 
 # Check centos3 VM backed up (qcow2)
-echo "Checking that centos3 backed up in user's home directory:"
-check "test -f /home/$UserName/centos3.qcow2.backup.gz" "This program detected that the file pathname \"/home/$c7hostUserName/centos3.qcow2.backup.gz\" does NOT exist. Please properly backup the centos3 VM (using gzip) to your home directory, and then re-run this checking shell script."
+echo "Checking that centos3 backed up in user's home directory:" | tee -a $logfile
+check "test -f /home/$UserName/centos3.qcow2.backup.gz" "This program detected that the file pathname \"/home/$c7hostUserName/centos3.qcow2.backup.gz\" does NOT exist. Please properly backup the centos3 VM (using gzip) to your home directory, and then re-run this checking shell script." | tee -a $logfile
 
-echo
-echo
-echo "Congratulations:"
-echo
-echo "You have completed your lab2. Please check SIGN-OFF section"
-echo "To setup your terminals and command output, etc. to show your"
-echo "OPS235 instructor for SIGN-OFF."
+echo | tee -a $logfile
+echo | tee -a $logfile
+echo "Congratulations!" | tee -a $logfile
+echo | tee -a $logfile
+echo "You have successfully completed Lab 2." | tee -a $logfile
+echo "1. Submit a screenshot of your entire desktop (including this window) to your course professor." | tee -a $logfile
+echo "2. A copy of this script output has been created at /root/lab1_output.txt. Submit this file along with your screenshot." | tee -a $logfile
 echo

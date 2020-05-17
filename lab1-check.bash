@@ -42,8 +42,8 @@ then
 fi
 
 # System information gathering
-echo "OPS235 Lab 1 Check Script" | tee $logfile
-echo
+echo "OPS235 Lab 1 Check Script" > $logfile
+echo | tee -a $logfile
 echo "SYSTEM INFORMATION:" | tee -a $logfile
 #echo "------------------------------------" | tee -a $logfile
 hostnamectl | tee -a $logfile

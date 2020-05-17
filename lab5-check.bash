@@ -12,6 +12,8 @@
 # Function to indicate OK (in green) if check is true; otherwise, indicate
 # WARNING (in red) if check is false and end with false exit status
 
+logfile=/root/lab5_output.txt
+
 function check(){
 
   if eval $1
@@ -63,59 +65,60 @@ read null
 clear
 
 # Start checking lab5
-echo
-echo "CHECKING YOUR LAB5 WORK:"
-echo
+echo "OPS235 Lab 5 Check Script" > $logfile
+echo | tee -a $logfile
+echo "CHECKING YOUR LAB 5 WORK:" | tee -a $logfile
+echo | tee -a $logfile
 
 # Check for file pathname /root/bin/monitor-disk-space.bash (c7host)
-echo -n "Checking that \"/root/bin/monitor-disk-space.bash\" file exists (c7host): "
-check "test -f \"/root/bin/monitor-disk-space.bash\"" "This program found there is no file called: \"/root/bin/monitor-disk-space.bash\" on your \"c7host\" VM. Please create this archive again (for the correct VM), and re-run this checking shell script."
+echo -n "Checking that \"/root/bin/monitor-disk-space.bash\" file exists (c7host): " | tee -a $logfile
+check "test -f \"/root/bin/monitor-disk-space.bash\"" "This program found there is no file called: \"/root/bin/monitor-disk-space.bash\" on your \"c7host\" VM. Please create this archive again (for the correct VM), and re-run this checking shell script." | tee -a $logfile
 
 # Check crontab file (c7host)
-echo -n "Checking for crontab file (c7host): "
-check "crontab -l | grep -iqs \"monitor-disk-space.bash\"" "This program found there was no crontab entry to run the monitor-disk-space.bash shell script. Please properly create this crontab entry as root , and re-run this checking shell script."
+echo -n "Checking for crontab file (c7host): " | tee -a $logfile
+check "crontab -l | grep -iqs \"monitor-disk-space.bash\"" "This program found there was no crontab entry to run the monitor-disk-space.bash shell script. Please properly create this crontab entry as root , and re-run this checking shell script." | tee -a $logfile
 
 # Check /dev/vda3 or /dev/sda3 partition created (centos2)
-echo "Checking that /dev/vda3 or /dev/sda3 partition created (centos2): "
-read -p "Enter your centos2 username: " centos2UserName
-read -p "Enter IP Address for your centos2 VMs eth0 device: " centos2_IPADDR
-check "ssh ${centos2UserName}@$centos2_IPADDR ls /dev/vda3 > /dev/null || ls /dev/sda3 > /dev/null" "This program did NOT detect the partition called: \"/dev/vda3\" or \"/dev/sda3\" was created. Please create this partition, and re-run this checking script."
+echo "Checking that /dev/vda3 or /dev/sda3 partition created (centos2): " | tee -a $logfile
+read -p "Enter your centos2 username: " centos2UserName | tee -a $logfile
+read -p "Enter IP Address for your centos2 VMs eth0 device: " centos2_IPADDR | tee -a $logfile
+check "ssh ${centos2UserName}@$centos2_IPADDR ls /dev/vda3 > /dev/null || ls /dev/sda3 > /dev/null" "This program did NOT detect the partition called: \"/dev/vda3\" or \"/dev/sda3\" was created. Please create this partition, and re-run this checking script." | tee -a $logfile
 
 # Check /dev/vda3 partition was mounted under /archive directory (centos2)
-echo "Checking that \"/dev/vda3\" or \"/dev/sda3\" partition was mounted under \"/archive\" directory (centos2): "
-check "ssh ${centos2UserName}@$centos2_IPADDR mount | grep -isq \"/archive\"" "This program did NOT detect that the \"/dev/vda3\" or \"/dev/sda3\" partition was mounted under the \"/archive\" directory. Please make appropriate corrections, and re-run this checking script."
+echo "Checking that \"/dev/vda3\" or \"/dev/sda3\" partition was mounted under \"/archive\" directory (centos2): " | tee -a $logfile
+check "ssh ${centos2UserName}@$centos2_IPADDR mount | grep -isq \"/archive\"" "This program did NOT detect that the \"/dev/vda3\" or \"/dev/sda3\" partition was mounted under the \"/archive\" directory. Please make appropriate corrections, and re-run this checking script." | tee -a $logfile
 
 # Check /dev/vda3 partition was formatted for ext4 file-system (centos2)
-echo "Checking that \"/dev/vda3\" (or \"/dev/sda3\") partition was formatted for ext4 file-system: "
-check "ssh ${centos2UserName}@$centos2_IPADDR mount | grep /archive | grep -isq ext4" "This program did NOT detect that the \"/dev/vda3\" partition was formatted for the ext4 file-system. Please format this partition, and re-run this checking script."
+echo "Checking that \"/dev/vda3\" (or \"/dev/sda3\") partition was formatted for ext4 file-system: " | tee -a $logfile
+check "ssh ${centos2UserName}@$centos2_IPADDR mount | grep /archive | grep -isq ext4" "This program did NOT detect that the \"/dev/vda3\" partition was formatted for the ext4 file-system. Please format this partition, and re-run this checking script." | tee -a $logfile
 
 # Check /archive logical volume is 2.5G (centos2)
-echo "Checking that \"/archive\" logical volume has size: 2.5G (centos2): "
-check "ssh ${centos2UserName}@$centos2_IPADDR lsblk | grep archive | grep -isq 2.5G" "This program did NOT detect that the size of the \"archive\" logical volume is set to: \"2.5G\". Please set the correct size for this partition, and re-run this checking script."
+echo "Checking that \"/archive\" logical volume has size: 2.5G (centos2): " | tee -a $logfile
+check "ssh ${centos2UserName}@$centos2_IPADDR lsblk | grep archive | grep -isq 2.5G" "This program did NOT detect that the size of the \"archive\" logical volume is set to: \"2.5G\". Please set the correct size for this partition, and re-run this checking script." | tee -a $logfile
 
 # Check new virtual hard disk /dev/sdb created (centos2)
-echo "Checking that new virtual hard disk \"/dev/vdb\" (or \"/dev/sdb\") was created (centos2): "
-check "ssh $centos2UserName@$centos2_IPADDR  ls /dev/[sv]db* >/dev/null" "This program did NOT detect the partition called: \"/dev/vdb\" or \"/dev/sdb\". Create this partition, and re-run this checking script."
+echo "Checking that new virtual hard disk \"/dev/vdb\" (or \"/dev/sdb\") was created (centos2): " | tee -a $logfile
+check "ssh $centos2UserName@$centos2_IPADDR  ls /dev/[sv]db* >/dev/null" "This program did NOT detect the partition called: \"/dev/vdb\" or \"/dev/sdb\". Create this partition, and re-run this checking script." | tee -a $logfile
 
 # Check /dev/sdb1 partition created (centos2)
-echo "Checking that \"/dev/vdb1\" (or \"dev/sdb1\")partition was created (centos2): "
- check "ssh $centos2UserName@$centos2_IPADDR lsblk | grep -isq sdb1 || ssh $centos2UserName@$centos2_IPADDR lsblk | grep -isq vdb1 " "This program did NOT detect the partition called: \"vdb1\" or \"sdb1\" when issuing the \"lsblk\" command. Please make appropriate fixes, and re-run this checking script."
+echo "Checking that \"/dev/vdb1\" (or \"dev/sdb1\")partition was created (centos2): " | tee -a $logfile
+ check "ssh $centos2UserName@$centos2_IPADDR lsblk | grep -isq sdb1 || ssh $centos2UserName@$centos2_IPADDR lsblk | grep -isq vdb1 " "This program did NOT detect the partition called: \"vdb1\" or \"sdb1\" when issuing the \"lsblk\" command. Please make appropriate fixes, and re-run this checking script." | tee -a $logfile
 
 # Check \"home\" file-system size increased
-echo -n "Checking that that the \"home\" file system increased to 4G (centos2): "
-check "ssh $centos2UserName@$centos2_IPADDR lsblk | grep home | grep -isq 4G" "This program did NOT detect that the \"home\" file-system was increased to 4G. Please change the size of your home partition to 3G, and re-run this checking script."
+echo -n "Checking that that the \"home\" file system increased to 4G (centos2): " | tee -a $logfile
+check "ssh $centos2UserName@$centos2_IPADDR lsblk | grep home | grep -isq 4G" "This program did NOT detect that the \"home\" file-system was increased to 4G. Please change the size of your home partition to 3G, and re-run this checking script." | tee -a $logfile
 
 # Check automatic boot of partition in /etc/fstab (centos2)
-echo -n "Checking that entry of \"/archive\" mount in /etc/fstab(centos2): "
-check "ssh $centos2UserName@$centos2_IPADDR grep -sq /archive /etc/fstab" "This program did NOT detect  that the \"/etc/fstab\" file contains the entry to mount the \"/dev/vda3\" partition under the \"/archive\" directory. Please make corrections to this file, and re-run this checking script."
+echo -n "Checking that entry of \"/archive\" mount in /etc/fstab(centos2): " | tee -a $logfile
+check "ssh $centos2UserName@$centos2_IPADDR grep -sq /archive /etc/fstab" "This program did NOT detect  that the \"/etc/fstab\" file contains the entry to mount the \"/dev/vda3\" partition under the \"/archive\" directory. Please make corrections to this file, and re-run this checking script." | tee -a $logfile
 
 
 
-echo
-echo
-echo "Congratulations!"
-echo
-echo "You have completed your lab5. Please check SIGN-OFF section"
-echo "To setup your terminals and command output, etc. to show your"
-echo "OPS235 instructor for SIGN-OFF."
+cho | tee -a $logfile
+echo | tee -a $logfile
+echo "Congratulations!" | tee -a $logfile
+echo | tee -a $logfile
+echo "You have successfully completed Lab 5." | tee -a $logfile
+echo "1. Submit a screenshot of your entire desktop (including this window) to your course professor." | tee -a $logfile
+echo "2. A copy of this script output has been created at /root/lab1_output.txt. Submit this file along with your screenshot." | tee -a $logfile
 echo
