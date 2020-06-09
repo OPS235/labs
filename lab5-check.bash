@@ -80,8 +80,8 @@ check "crontab -l | grep -iqs \"monitor-disk-space.bash\"" "This program found t
 
 # Check /dev/vda3 or /dev/sda3 partition created (centos2)
 echo "Checking that /dev/vda3 or /dev/sda3 partition created (centos2): " | tee -a $logfile
-read -p "Enter your centos2 username: " centos2UserName | tee -a $logfile
-read -p "Enter IP Address for your centos2 VMs eth0 device: " centos2_IPADDR | tee -a $logfile
+read -p "Enter your centos2 username: " centos2UserName
+read -p "Enter IP Address for your centos2 VMs eth0 device: " centos2_IPADDR
 check "ssh ${centos2UserName}@$centos2_IPADDR ls /dev/vda3 > /dev/null || ls /dev/sda3 > /dev/null" "This program did NOT detect the partition called: \"/dev/vda3\" or \"/dev/sda3\" was created. Please create this partition, and re-run this checking script." | tee -a $logfile
 
 # Check /dev/vda3 partition was mounted under /archive directory (centos2)

@@ -98,13 +98,13 @@ check "virsh list | grep -isq centos1 && virsh list | grep -isq centos2 && virsh
 
 # Check centos1 VM has \"ext4\" file-system types
 echo "Checking that \"centos1\" has correct ext4 file-system type:" | tee -a $logfile
-read -p "Enter the username that you created for your c7host and ALL VMs: " UserName | tee -a $logfile
-read -p "Enter IP Address for your centos1 VMs eth0 device: " centos1_IPADDR | tee -a $logfile
+read -p "Enter the username that you created for your c7host and ALL VMs: " UserName
+read -p "Enter IP Address for your centos1 VMs eth0 device: " centos1_IPADDR
 check "ssh $UserName@$centos1_IPADDR \"lsblk -f | grep -i /$ | grep -iqs \"ext4\"\"" "This program detected that your centos1 VM does NOT have the correct filesystem type (ext4) for your / partition. Please remove and recreate the \"centos1\" VM, and re-run this checking shell script." | tee -a $logfile
 
 # Check centos2 VM has \"ext4\" file-system types
 echo "Checking that \"centos2\" has correct ext4 file-system types:" | tee -a $logfile
-read -p "Enter IP Address for your centos2 VMs eth0 device: " centos2_IPADDR | tee -a $logfile
+read -p "Enter IP Address for your centos2 VMs eth0 device: " centos2_IPADDR
 check "ssh $UserName@$centos2_IPADDR \"lsblk -f | grep -iqs \"ext4\" && lsblk -f | grep -i /home$ | grep -iqs \"ext4\"\"" "This program detected that your centos2 VM does NOT have \"ext4\" file system types for / and/or /home partitions. Please remove and recreate the \"centos2\" VM, and re-run this checking shell script." | tee -a $logfile
 
 

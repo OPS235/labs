@@ -87,7 +87,7 @@ check "ping 192.168.235.13 -c 1 > /dev/null 2>&1" "This program could not ping c
 
 # Check for persistent setting on centos1
 echo "Check for persistent setting on centos1: " | tee -a $logfile
-read -p "Enter your username for centos1: " centos1UserName | tee -a $logfile
+read -p "Enter your username for centos1: " centos1UserName
 check "ssh ${centos1UserName}@centos1 grep -isq 192.168.235.11 /etc/sysconfig/network-scripts/ifcfg-eth0" "This program could find a correct address for the ifcfg-eth0 file. Please make fixes, and re-run this checking shell script." | tee -a $logfile
 
 # Check for persistent setting on centos2

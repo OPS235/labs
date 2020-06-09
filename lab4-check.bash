@@ -75,8 +75,8 @@ echo | tee -a $logfile
 
 # Check ops235_2 user created (centos1)
 echo "Checking that ops235_2 user created (centos1): " | tee -a $logfile
-read -p "Enter your centos1 username: " centos1UserName | tee -a $logfile
-read -p "Enter IP Address for your centos1 VMs eth0 device: " centos1_IPADDR | tee -a $logfile
+read -p "Enter your centos1 username: " centos1UserName
+read -p "Enter IP Address for your centos1 VMs eth0 device: " centos1_IPADDR
 check "ssh $centos1UserName@$centos1_IPADDR \"grep -isq \"ops235_2\" /etc/passwd\"" "This program did NOT detect the user \"ops235_2\" in the \"/etc/passwd\" file. Please create this user, complete this lab, and re-run this checking script." | tee -a $logfile
 
 # Check ops235_1 user removed (centos1)

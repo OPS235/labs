@@ -82,7 +82,7 @@ centos3UserName="ops235"
 
 # Check creation of /tmp/archive1.tar archive file (centos3)
 echo "Checking creation of \"/tmp/extract1/archive1.tar\" archive file (centos3): " | tee -a $logfile
-read -p "Enter IP Address for your centos3 VMs eth0 device: " centos3_IPADDR | tee -a $logfile
+read -p "Enter IP Address for your centos3 VMs eth0 device: " centos3_IPADDR
 check "ssh $centos3UserName@$centos3_IPADDR test -f /tmp/extract1/archive1.tar" "This program found there is no file called: \"/tmp/extract1/archive1.tar\" on your \"centos3\" VM. Please create this archive again (for the correct VM), and re-run this checking shell script." | tee -a $logfile
 
 # Check creation of /tmp/archive2.tar.gz zipped tarball (centos3)

@@ -71,12 +71,12 @@ echo | tee -a $logfile
 
 # Check myfile.txt copied to user's Matrix home directory
 echo "Checking file \"myfile.txt\" copied to user's Matrix home directory: " | tee -a $logfile
-read -p "Enter your username for matrix: " matrixUserName | tee -a $logfile
+read -p "Enter your username for matrix: " matrixUserName
 check "ssh $matrixUserName@matrix.senecac.on.ca ls /home/$matrixUserName/myfile.txt > /dev/null 2>/dev/null" "This program did not detect the file called \"myfile.txt\" in your Matrix account's home directory. Please make corrections, and re-run this checking shell script." | tee -a $logfile
 
 # Check that the account "other" was created
 echo "Checking that the user called \"other\" was created: " | tee -a $logfile
-read -p "Enter your username for your centos1 VM: " centos1UserName | tee -a $logfile
+read -p "Enter your username for your centos1 VM: " centos1UserName
 check "ssh $centos1UserName@centos1 grep -sq other /etc/passwd" "This program did not detect the user called \"other\" in your centos1 VM. Please make corrections, and re-run this checking shell script." | tee -a $logfile
 
 # Check that PermitRootLogin in /etc/ssh/sshd_config file was set to no
@@ -102,7 +102,7 @@ run the gedit application from centos1, but display in your c7host machine.
 Type the command at the prompt below:
 
 +
-read -p "Enter ssh command here: " studentCommand | tee -a $logfile
+read -p "Enter ssh command here: " studentCommand
 until [ "$studentCommand" = "ssh -X -C $centos1UserName@centos1 gedit" -o "$studentCommand" = "ssh -C -X $centos1UserName@centos1 gedit" -o "$studentCommand" = "ssh -XC $centos1UserName@centos1 gedit" -o "$studentCommand" = "ssh -CX $centos1UserName@centos1 gedit" ]
 do
    echo "Error: Refer to lab7 to run gedit command remotely via ssh" | tee -a $logfile
