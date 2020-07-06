@@ -63,9 +63,17 @@ then
   exit 1
 fi
 
-# Start checking lab6
+# System information gathering
 echo "OPS235 Lab 6 Check Script" > $logfile
 echo | tee -a $logfile
+echo "SYSTEM INFORMATION:" | tee -a $logfile
+#echo "------------------------------------" | tee -a $logfile
+hostnamectl | tee -a $logfile
+echo -n "              Date: "  | tee -a $logfile
+date | tee -a $logfile
+echo | tee -a $logfile
+
+# Start checking lab6
 echo "CHECKING YOUR LAB 6 WORK:" | tee -a $logfile
 echo | tee -a $logfile
 
@@ -128,5 +136,5 @@ echo "Congratulations!" | tee -a $logfile
 echo | tee -a $logfile
 echo "You have successfully completed Lab 6." | tee -a $logfile
 echo "1. Submit a screenshot of your entire desktop (including this window) to your course professor." | tee -a $logfile
-echo "2. A copy of this script output has been created at /root/lab1_output.txt. Submit this file along with your screenshot." | tee -a $logfile
+echo "2. A copy of this script output has been created at /root/lab6_output.txt. Submit this file along with your screenshot." | tee -a $logfile
 echo
