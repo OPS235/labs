@@ -122,7 +122,7 @@ check "ssh $centos2UserName@$centos2_IPADDR grep -sq /archive /etc/fstab" "This 
 
 
 
-cho | tee -a $logfile
+echo | tee -a $logfile
 echo | tee -a $logfile
 echo "Congratulations!" | tee -a $logfile
 echo | tee -a $logfile
