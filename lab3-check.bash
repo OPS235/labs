@@ -128,5 +128,5 @@ echo "Congratulations!" | tee -a $logfile
 echo | tee -a $logfile
 echo "You have successfully completed Lab 3." | tee -a $logfile
 echo "1. Submit a screenshot of your entire desktop (including this window) to your course professor." | tee -a $logfile
-echo "2. A copy of this script output has been created at /root/lab1_output.txt. Submit this file along with your screenshot." | tee -a $logfile
+echo "2. A copy of this script output has been created at /root/lab3_output.txt. Submit this file along with your screenshot." | tee -a $logfile
 echo
