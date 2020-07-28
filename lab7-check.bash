@@ -114,7 +114,7 @@ read -p "Enter ssh command here: " studentCommand
 until [ "$studentCommand" = "ssh -X -C $centos1UserName@centos1 gedit" -o "$studentCommand" = "ssh -C -X $centos1UserName@centos1 gedit" -o "$studentCommand" = "ssh -XC $centos1UserName@centos1 gedit" -o "$studentCommand" = "ssh -CX $centos1UserName@centos1 gedit" ]
 do
    echo "Error: Refer to lab7 to run gedit command remotely via ssh" | tee -a $logfile
-   read -p "Enter correct ssh command with gedit argument here: " studentCommand | tee -a $logfile
+   read -p "Enter correct ssh command with gedit argument here: " studentCommand
 done
 
 ssh -f -X -C $centos1UserName@centos1 gedit > /dev/null 2> /dev/null && echo -e "\e[0;32mOK\e[m" | tee -a $logfile
