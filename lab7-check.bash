@@ -132,7 +132,7 @@ echo -n "Checking for history of setting ping exception: " | tee -a $logfile
 check "history | grep -sq 'iptables -A INPUT.*-p.*icmp.*ACCEPT' | head -1" "This program did not detect when viewing results from the \"history\" command the iptables command: \"iptables -A INPUT -p icmp -s {lab-mates external-facing ip address} -j ACCEPT\". Please make corrections, REBOOT your c7host machine,  and re-run this checking shell script." | tee -a $logfile
 
 # check for iptables exception for ssh
-echo -n "Checking for history of setting ping exception: " | tee -a $logfile
+echo -n "Checking for history of setting SSH exception: " | tee -a $logfile
 check "history | grep -sq 'iptables -A INPUT.*-p.*tcp.*--dport.*22.*ACCEPT' | head -1" "This program did not detect when viewing results from the \"history\" command the iptables command: \"iptables -A INPUT -p tcp -s {lab-mates external-facing ip address} --dport 22 -j ACCEPT\". Please make corrections, REBOOT your c7host machine, and re-run this checking shell script." | tee -a $logfile
 
 # check for backing up iptables file to a backup file
