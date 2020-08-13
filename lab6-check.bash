@@ -122,12 +122,12 @@ check "ping centos2 -c 1 > /dev/null 2>&1" "This program could not ping centos2.
 echo -n "Check pinging centos3: " | tee -a $logfile
 check "ping centos3 -c 1 > /dev/null 2>&1" "This program could not ping centos3. Please make appropriate corrections, and re-run this checking script." | tee -a $logfile
 
-# Check existance of network-info.bash script
-echo -n "Checking existance of \"/root/bin/network-info.bash\" script: " | tee -a $logfile
+# Check existence of network-info.bash script
+echo -n "Checking existence of \"/root/bin/network-info.bash\" script: " | tee -a $logfile
 check "test -f /root/bin/network-info.bash" "This program could not detect the pathname: \"/root/bin/network-info.bash\". Please download and run the script, and re-run this checking script." | tee -a $logfile
 
 # Check proof that network-info.bash script was run
-echo -n "Checking existance of \"/root/network-info.html\" script: " | tee -a $logfile
+echo -n "Checking existence of \"/root/network-info.html\" script: " | tee -a $logfile
 check "test -f /root/network-info.html" "This program could not detect the pathname: \"/root/network-info.html\". Please download and run the script, and re-run this checking script." | tee -a $logfile
 
 echo | tee -a $logfile
